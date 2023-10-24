@@ -31,7 +31,6 @@ model Profiles {
 model Sessions {
   token           String   @unique
   user_id         Int
-  tenant_id       Int
   active          Boolean
   date_created    DateTime
   date_expiration DateTime

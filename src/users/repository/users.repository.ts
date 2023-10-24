@@ -1,21 +1,23 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma, Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { AuthUserDTO } from '../dto/AuthUser.dto';
+import { compareSync } from 'bcrypt';
 
 @Injectable()
-export class UserRepository {
+export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async user(
-    userWhereUniqueInput: Prisma.UsersWhereUniqueInput,
-  ): Promise<Users | null> {
-    const user = await this.prisma.users.findUnique({
-      where: userWhereUniqueInput,
+  async user(where: Prisma.UsersWhereInput): Promise<Users | null> {
+    const user = await this.prisma.users.findFirst({
+      where,
     });
     if (!user) {
-      throw new NotFoundException(
-        `Id ${userWhereUniqueInput.id} de usuário não encontrado.`,
-      );
+      throw new NotFoundException(`Usuário não encontrado.`);
     }
     return user;
   }
@@ -58,5 +60,25 @@ export class UserRepository {
     return await this.prisma.users.delete({
       where,
     });
+  }
+
+  async validateUser(username: string, password?: string) {
+    const user = await this.user({ OR: [{ username }, { email: username }] });
+    if (!user) {
+      throw new BadRequestException('Usuário ou Senha Inválidos');
+    }
+
+    if (password && !compareSync(password, user?.password)) {
+      throw new BadRequestException('Usuário ou Senha Inválidos');
+    }
+
+    return new AuthUserDTO(
+      user.id,
+      user.name,
+      user.email,
+      user.document,
+      user.profile_id,
+      user.username,
+    );
   }
 }

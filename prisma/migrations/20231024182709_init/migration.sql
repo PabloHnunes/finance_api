@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
+    "username" VARCHAR(20) NOT NULL,
     "name" VARCHAR(80) NOT NULL,
     "email" TEXT NOT NULL,
     "document" VARCHAR(11) NOT NULL,
@@ -23,14 +24,19 @@ CREATE TABLE "Profiles" (
 CREATE TABLE "Sessions" (
     "token" TEXT NOT NULL,
     "user_id" INTEGER NOT NULL,
-    "tenant_id" INTEGER NOT NULL,
     "active" BOOLEAN NOT NULL,
     "date_created" TIMESTAMP(3) NOT NULL,
     "date_expiration" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Users_username_key" ON "Users"("username");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Users_document_key" ON "Users"("document");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Profiles_name_key" ON "Profiles"("name");

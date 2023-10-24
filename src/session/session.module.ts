@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { SessionService } from './session.service';
-import { SessionController } from './session.controller';
+import { PrismaService } from '../prisma/prisma.service';
+import { SessionRepository } from './repository/session.repository';
 
 @Module({
-  providers: [SessionService],
-  controllers: [SessionController]
+  providers: [PrismaService, SessionService, SessionRepository],
+  exports: [SessionService, SessionRepository],
 })
 export class SessionModule {}
