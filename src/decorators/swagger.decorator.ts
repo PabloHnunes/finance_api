@@ -10,7 +10,7 @@ export const SwaggerResponse = (...statusCodes: number[]): MethodDecorator => {
     statusCodes.forEach((statusCode) => {
       ApiResponse({
         status: statusCode,
-        description: getDescription(statusCode), // Defina uma função getDescription para retornar as descrições desejadas com base no código de status
+        description: getDescription(statusCode),
         type: CustomException,
       })(target, key, descriptor);
     });

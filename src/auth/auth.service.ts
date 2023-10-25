@@ -7,7 +7,10 @@ import { JwtService } from '@nestjs/jwt';
 import * as path from 'path';
 import * as fs from 'fs';
 import { SessionService } from '../session/session.service';
-import getPrivateKey from 'src/utils/getPrivateKeyFromFile';
+import {
+  getPrivateKey,
+  getPrivateRefreshKey,
+} from 'src/utils/getPrivateKeyFromFile';
 import { AuthUserDTO } from 'src/users/dto/AuthUser.dto';
 import { UsersService } from 'src/users/users.service';
 import * as DTO from './dto';
@@ -57,6 +60,7 @@ export class AuthService {
       [],
     );
   }
+
   async reauthenticate(data: DTO.RefreshDTO): Promise<DTO.ResponseAuthDTO> {
     const user: AuthUserDTO = await this.verifyPublicRefreshToken(
       data.refresh_private_token,
@@ -101,10 +105,7 @@ export class AuthService {
       await this.jwtService.signAsync(
         { ...payload, refresh: true },
         {
-          secret: fs.readFileSync(
-            path.resolve(__dirname, process.env.PRIVATE_REFRESH_KEY_PATH),
-            'utf8',
-          ),
+          secret: getPrivateRefreshKey(),
           expiresIn: '2h',
         },
       ),

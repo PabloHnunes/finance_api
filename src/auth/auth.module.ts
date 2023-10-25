@@ -4,7 +4,8 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
 import { SessionModule } from 'src/session/session.module';
-import getPrivateKey from 'src/utils/getPrivateKeyFromFile';
+import { getPrivateKey } from 'src/utils/getPrivateKeyFromFile';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import getPrivateKey from 'src/utils/getPrivateKeyFromFile';
       signOptions: { expiresIn: '30m' },
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

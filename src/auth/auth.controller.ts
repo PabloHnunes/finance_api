@@ -38,7 +38,7 @@ export class AuthController {
     description: 'Solicitação de logout executada com sucesso.',
     type: DTO.ResponseLogoutDTO,
   })
-  async logout(@Req() request: any): Promise<any> {
+  async logout(@Req() request: any): Promise<DTO.ResponseLogoutDTO> {
     return await this.authService.logout(request);
   }
 }

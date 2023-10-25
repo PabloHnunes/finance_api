@@ -7,6 +7,7 @@ import { Prisma, Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthUserDTO } from '../dto/AuthUser.dto';
 import { compareSync } from 'bcrypt';
+import { CreateUserBodyDTO, UserDTO } from '../dto';
 
 @Injectable()
 export class UsersRepository {
@@ -39,10 +40,21 @@ export class UsersRepository {
     });
   }
 
-  async createUser(data: any) {
-    return await this.prisma.users.create({
+  async createUser(data: CreateUserBodyDTO) {
+    await this.validadeDataUser(data.username, data.email);
+
+    const userCreated = await this.prisma.users.create({
       data,
     });
+
+    return new UserDTO(
+      userCreated.id,
+      userCreated.name,
+      userCreated.username,
+      userCreated.email,
+      userCreated.document,
+      userCreated.profile_id,
+    );
   }
 
   async updateUser(params: {
@@ -50,6 +62,9 @@ export class UsersRepository {
     data: Prisma.UsersUpdateInput;
   }) {
     const { where, data } = params;
+
+    await this.validadeDataUser(data.username as string, data.email as string);
+
     return await this.prisma.users.update({
       data: { ...data, password: data.password ? data.password : undefined },
       where,
@@ -80,5 +95,19 @@ export class UsersRepository {
       user.profile_id,
       user.username,
     );
+  }
+
+  private async validadeDataUser(username: string, email: string) {
+    const user = await this.prisma.users.findFirst({
+      where: { OR: [{ email: email }, { username: username }] },
+    });
+
+    if (user) {
+      throw new BadRequestException(
+        (user.email = email
+          ? 'Email já cadastrado.'
+          : 'Username já está em uso.'),
+      );
+    }
   }
 }
