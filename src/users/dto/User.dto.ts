@@ -14,7 +14,6 @@ export class UserDTO {
   @ApiProperty()
   @IsValidator('string')
   email: string;
-
   @ApiProperty()
   @IsValidator('string')
   document: string;

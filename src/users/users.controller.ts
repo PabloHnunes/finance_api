@@ -5,9 +5,16 @@ import {
   UseInterceptors,
   Put,
   Delete,
+  Query,
+  Get,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { SwaggerResponse } from 'src/decorators/swagger.decorator';
 import * as DTO from './dto';
 import { PasswordInterceptor } from 'src/interceptor/password.interceptor';
@@ -17,6 +24,20 @@ import { PasswordInterceptor } from 'src/interceptor/password.interceptor';
 @ApiBearerAuth()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  @ApiOkResponse({
+    description: 'Usuário(s) encontrado(s) com sucesso!',
+    type: DTO.ResponseListUserDTO,
+  })
+  @ApiQuery({ name: 'offSet', type: 'number', required: false })
+  @ApiQuery({ name: 'limit', type: 'number', required: false })
+  async getUsers(
+    @Query('offSet') offSet?: number,
+    @Query('limit') limit?: number,
+  ) {
+    return await this.usersService.getUsers(offSet, limit);
+  }
 
   @Post()
   @SwaggerResponse(400, 401)

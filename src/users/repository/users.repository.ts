@@ -29,7 +29,7 @@ export class UsersRepository {
     cursor?: Prisma.UsersWhereUniqueInput;
     where?: Prisma.UsersWhereInput;
     orderBy?: Prisma.UsersOrderByWithRelationInput;
-  }): Promise<Users[]> {
+  }): Promise<UserDTO[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return await this.prisma.users.findMany({
       skip,
@@ -37,6 +37,15 @@ export class UsersRepository {
       cursor,
       where,
       orderBy,
+      select: {
+        id: true,
+        document: true,
+        email: true,
+        name: true,
+        profile_id: true,
+        username: true,
+        password: false,
+      },
     });
   }
 
@@ -78,7 +87,11 @@ export class UsersRepository {
   }
 
   async validateUser(username: string, password?: string) {
-    const user = await this.user({ OR: [{ username }, { email: username }] });
+    const user = await this.prisma.users.findFirst({
+      where: {
+        OR: [{ username: { contains: username } }, { email: username }],
+      },
+    });
     if (!user) {
       throw new BadRequestException('Usuário ou Senha Inválidos');
     }

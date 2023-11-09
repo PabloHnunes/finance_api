@@ -54,7 +54,7 @@ export class UsersService {
     return await this.repository.validateUser(username, password);
   }
 
-  async getUsers(offSet: number, limit: number) {
+  async getUsers(offSet?: number, limit?: number) {
     return await this.repository.users({
       skip: offSet ? offSet : undefined,
       take: limit ? limit : undefined,
