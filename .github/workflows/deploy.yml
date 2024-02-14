@@ -44,7 +44,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{secrets.VM_TESTE_SSH_KEY}}
           ARGS: '-rlgoDzvc --delete'
           SOURCE: 'dist/'
-          host: ${{vars.REMOTE_HOST}}
+          remoteHost : ${{vars.REMOTE_HOST}}
           username: ${{vars.REMOTE_USER}}
           password: ${{vars.REMOTE_PASS}}
           port: ${{vars.REMOTE_PORT}}
