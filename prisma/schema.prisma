@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Users {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   username   String   @unique @db.VarChar(20)
   name       String   @db.VarChar(80)
   email      String   @unique
@@ -31,7 +31,7 @@ model Profiles {
 
 model Sessions {
   token           String   @unique
-  user_id         Int
+  user_id         String
   active          Boolean
   date_created    DateTime
   date_expiration DateTime
@@ -44,7 +44,7 @@ model Rent {
   month        Int       @db.Integer()
   year         Int       @db.Integer()
   Users        Users     @relation(fields: [user_id], references: [id])
-  user_id      Int
+  user_id      String
   TypesRent    TypesRent @relation(fields: [type_rent_id], references: [id])
   type_rent_id Int
   createdAt    DateTime  @default(now())

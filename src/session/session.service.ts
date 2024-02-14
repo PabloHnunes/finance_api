@@ -10,7 +10,7 @@ export class SessionService {
     return await this.repository.createSession(data);
   }
 
-  async unactiveSessionsUserId(user_id: number) {
+  async unactiveSessionsUserId(user_id: string) {
     await this.repository.unactiveSessionsUserId(user_id);
   }
 

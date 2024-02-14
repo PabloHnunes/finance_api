@@ -1,12 +1,12 @@
 export class CreateSessionDTO {
   token: string;
-  user_id: number;
+  user_id: string;
   active: boolean;
   date_created: Date;
   date_expiration: Date;
   constructor(
     token: string,
-    user_id: number,
+    user_id: string,
     active: boolean,
     date_created: Date,
     date_expiration: Date,

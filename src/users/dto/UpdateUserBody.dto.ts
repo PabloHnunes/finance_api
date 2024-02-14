@@ -4,7 +4,7 @@ import { IsValidator } from 'src/decorators/validator.decorator';
 export class UpdateUserBodyDTO {
   @ApiProperty()
   @IsValidator('number')
-  id: number;
+  id: string;
   @ApiProperty()
   @IsValidator('string')
   name: string;
@@ -25,7 +25,7 @@ export class UpdateUserBodyDTO {
   profile_id: number;
 
   constructor(
-    id: number,
+    id: string,
     name: string,
     username: string,
     email: string,

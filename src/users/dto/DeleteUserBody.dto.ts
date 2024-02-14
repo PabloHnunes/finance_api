@@ -6,7 +6,7 @@ import { IsValidator } from 'src/decorators/validator.decorator';
 class IdUserModel {
   @ApiProperty()
   @IsValidator('number')
-  id: number;
+  id: string;
 }
 
 export class DeleteUserBodyDTO {

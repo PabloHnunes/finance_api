@@ -146,7 +146,7 @@ export class AuthService {
 
   private async createSession(
     token: string,
-    user_id: number,
+    user_id: string,
     expires_in: number,
   ) {
     const date_created = new Date();

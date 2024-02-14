@@ -3,8 +3,8 @@ import { IsValidator } from 'src/decorators/validator.decorator';
 
 export class UserDTO {
   @ApiProperty()
-  @IsValidator('number')
-  id: number;
+  @IsValidator('string')
+  id: string;
   @ApiProperty()
   @IsValidator('string')
   name: string;
@@ -22,7 +22,7 @@ export class UserDTO {
   profile_id: number;
 
   constructor(
-    id: number,
+    id: string,
     name: string,
     username: string,
     email: string,

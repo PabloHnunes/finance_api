@@ -1,5 +1,5 @@
 export class AuthUserDTO {
-  id: number;
+  id: string;
   name: string;
   email: string;
   document: string;
@@ -7,7 +7,7 @@ export class AuthUserDTO {
   username: string;
 
   constructor(
-    id: number,
+    id: string,
     name: string,
     email: string,
     document: string,

@@ -19,7 +19,7 @@ export class SessionRepository {
     });
   }
 
-  async unactiveSessionsUserId(user_id: number) {
+  async unactiveSessionsUserId(user_id: string) {
     await this.prisma.sessions.updateMany({
       where: { user_id },
       data: { active: false },
