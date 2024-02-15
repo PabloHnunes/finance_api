@@ -27,13 +27,14 @@ jobs:
     steps:
       - name: Build
         run: echo Building the app
+    needs: install
 
   # deploy desenvolvimento
   deploy-development:
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: http://10.3.2.91
+      url: http://192.168.1.8
     needs: build
     steps:
       - name: Repo Checkout
