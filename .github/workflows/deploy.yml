@@ -30,15 +30,6 @@ jobs:
       name: development
       url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     steps:
-      - name: Verificar e criar arquivo .env.dev
-        run: test -f .env.dev || touch .env.dev
-      - name: Write .env.dev file
-        run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.dev
-          echo "PORT=${{ secrets.PORT }}" >> .env.dev
-          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
-          cat .env.dev
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
@@ -50,3 +41,17 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_DEBUG: false
+          envkey_SOME_API_KEY: "123456abcdef"
+          envkey_SECRET_KEY: ${{ secrets.VM_TESTE_SSH_KEY }}
+          envkey_DATABASE_URL: ${{secrets.DATABASE_URL}}
+          envkey_PORT: ${{secrets.PORT}}
+          envkey_PRIVATE_KEY_PATH: ${{secrets.PRIVATE_KEY_PATH}}
+          envkey_PRIVATE_REFRESH_KEY_PATH: ${{secrets.PRIVATE_REFRESH_KEY_PATH}}
+          directory: ${{vars.TARGET}}
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
