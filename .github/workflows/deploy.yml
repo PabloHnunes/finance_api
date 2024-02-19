@@ -43,6 +43,7 @@ jobs:
           TARGET: ${{vars.TARGET}}
       - name: Check if .env.dev exists
         run: test -f $HOME/workspace/finance_api/.env.dev || touch $HOME/workspace/finance_api/.env.dev
+        shell: /usr/bin/bash -e {0}
       - name: Write .env.dev file
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $HOME/workspace/finance_api/.env.dev
