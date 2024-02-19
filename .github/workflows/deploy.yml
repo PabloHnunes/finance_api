@@ -48,3 +48,7 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
+      - name: Install Dependencies
+        run: yarn install
+      - name: Start Service
+        run: yarn start
