@@ -43,5 +43,3 @@ jobs:
           TARGET: ${{vars.TARGET}}
       - name: Install Dependencies
         run: yarn install
-      - name: Start Service
-        run: yarn start
