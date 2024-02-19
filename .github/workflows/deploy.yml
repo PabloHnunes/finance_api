@@ -30,13 +30,15 @@ jobs:
       name: development
       url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     steps:
+      - name: Verificar e criar arquivo .env.dev
+        run: test -f .env.dev || touch .env.dev
       - name: Write .env.dev file
         run: |
-          touch .env.dev
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.dev
           echo "PORT=${{ secrets.PORT }}" >> .env.dev
           echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
           echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
+          cat .env.dev
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
@@ -48,5 +50,3 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
-      - name: Cat .env.dev 
-        run: cat .env.dev
