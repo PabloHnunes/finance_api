@@ -48,5 +48,5 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
-      - name: Move .env.dev to TARGET
-        run: mv .env.dev ${{github.workspace}}/${{vars.TARGET}}/
+      - name: Cat .env.dev 
+        run: cat .env.dev
