@@ -33,7 +33,7 @@ jobs:
       - name: Write .env.dev file
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.dev
-          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env.dev
           echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
           echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
       - name: Repo Checkout
@@ -47,9 +47,9 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
-      - name: Down Dokcer Compose
+      - name: Down Docker Compose
         run: sudo docker compose down
-      - name: Build Dokcer Compose
+      - name: Build Docker Compose
         run: sudo docker compose build
-      - name: Up Dokcer Compose
+      - name: Up Docker Compose
         run: sudo docker compose up -d
