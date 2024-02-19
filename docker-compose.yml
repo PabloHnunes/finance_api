@@ -1,0 +1,45 @@
+services:
+  #Api Financeira local
+  finance_api:
+    build: .
+    depends_on: 
+      database-pg:
+        condition: service_healthy
+    ports:
+      - 8085:8085
+    restart: always
+    networks:
+      - finance-net
+  # BD Financeira
+  database-pg:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready",
+          "-U",
+          "postgres",
+          "-d",
+          "configurator"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    environment:
+      POSTGRES_DB: configurator
+      PGUSER: postgres
+      POSTGRES_PASSWORD: postgres
+      LANG: en_US.utf8
+    volumes:
+      - data:/var/lib/postgresql/data-pg:Z
+    networks:
+      - finance-net
+
+networks:
+  finance-net:
+    driver: bridge
+volumes:
+   data:
