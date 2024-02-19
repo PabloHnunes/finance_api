@@ -42,10 +42,10 @@ jobs:
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
       - name: Check if .env.dev exists
-        run: test -f /home/ubuntu/workspace/finance_api/.env.dev || touch /home/ubuntu/workspace/finance_api/.env.dev
+        run: test -f $HOME/workspace/finance_api/.env.dev || touch $HOME/workspace/finance_api/.env.dev
       - name: Write .env.dev file
         run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> /home/ubuntu/workspace/finance_api/.env.dev
-          echo "PORT=${{ secrets.PORT }}" >> /home/ubuntu/workspace/finance_api/.env.dev
-          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> /home/ubuntu/workspace/finance_api/.env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> /home/ubuntu/workspace/finance_api/.env.dev
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $HOME/workspace/finance_api/.env.dev
+          echo "PORT=${{ secrets.PORT }}" >> $HOME/workspace/finance_api/.env.dev
+          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> $HOME/workspace/finance_api/.env.dev
+          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> $HOME/workspace/finance_api/.env.dev
