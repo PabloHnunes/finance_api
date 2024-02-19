@@ -22,12 +22,6 @@ jobs:
           key: ${{runner.os}}-${{hashFiles('**/yarn.locks')}}
       - name: Install dependencies
         run: yarn install
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build
-        run: echo Building the app
-    needs: install
 
   # deploy desenvolvimento
   deploy-development:
@@ -35,14 +29,7 @@ jobs:
     environment:
       name: development
       url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
-    needs: build
     steps:
-      - name: Check if private key exists
-        id: check_private_key
-        run: |
-          if [ ! -f private.key ]; then
-            openssl genpkey -algorithm RSA -out private.key && openssl rsa -pubout -in private.key -out private.refresh.key
-          fi
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
