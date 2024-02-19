@@ -30,14 +30,19 @@ jobs:
       name: development
       url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     steps:
-      - name: Write .env.dev file
+      # - name: Write .env.dev file
+      #   run: |
+      #     touch .env.dev
+      #     echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env.dev
+      #     echo "PORT=${{ secrets.PORT }}" >> .env.dev
+      #     echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
+      #     echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
+      #     cat .env.dev
+      - name: Create config.ini file
         run: |
-          touch .env.dev
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env.dev
-          echo "PORT=${{ secrets.PORT }}" >> .env.dev
-          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
-          cat .env.dev
+          echo "option1=value1" > config.ini
+          echo "option2=value2" >> config.ini
+          echo "option3=value3" >> config.ini
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
