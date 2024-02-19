@@ -53,11 +53,11 @@ jobs:
     steps:
       - name: Create .env.dev file
         run: |
-          touch .env.dev
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env.dev
-          echo "PORT=${{ secrets.PORT }}" >> .env.dev
-          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
+          touch ${{vars.TARGET}}/.env.dev
+          echo "DATABASE_URL=${{ vars.DATABASE_URL }}" > ${{vars.TARGET}}/.env.dev
+          echo "PORT=${{ vars.PORT }}" >> ${{vars.TARGET}}/.env.dev
+          echo "PRIVATE_KEY_PATH=${{ vars.PRIVATE_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
+          echo "PRIVATE_REFRESH_KEY_PATH=${{ vars.PRIVATE_REFRESH_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
       - name: SSH to VM and run script
         uses: appleboy/ssh-action@master
         with:
@@ -67,13 +67,6 @@ jobs:
           port: ${{vars.REMOTE_PORT}}
           script: |
             # Comandos a serem executados na VM
-            #cd ${{vars.TARGET}}
-            #touch .env.dev
-            #echo "DATABASE_URL=${{ vars.DATABASE_URL }}" > .env.dev
-            #echo "PORT=${{ vars.PORT }}" >> .env.dev
-            #echo "PRIVATE_KEY_PATH=${{ vars.PRIVATE_KEY_PATH }}" >> .env.dev
-            #echo "PRIVATE_REFRESH_KEY_PATH=${{ vars.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
-            #cat .env.dev
             sudo docker compose down
             sudo docker compose build
             sudo docker compose up -d
