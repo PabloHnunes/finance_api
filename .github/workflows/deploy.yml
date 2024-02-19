@@ -32,10 +32,10 @@ jobs:
     steps:
       - name: Write .env.dev file
         run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.dev
-          echo "PORT=${{ secrets.PORT }}" >> .env.dev
-          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> /home/runner/work/finance_api/finance_api/.env.dev
+          echo "PORT=${{ secrets.PORT }}" >> /home/runner/work/finance_api/finance_api/.env.dev
+          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> /home/runner/work/finance_api/finance_api/.env.dev
+          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> /home/runner/work/finance_api/finance_api/.env.dev
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
