@@ -30,11 +30,6 @@ jobs:
       name: development
       url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     steps:
-      - name: Create config.ini file
-        run: |
-          echo "option1=value1" > config.ini
-          echo "option2=value2" >> config.ini
-          echo "option3=value3" >> config.ini
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
@@ -50,14 +45,10 @@ jobs:
   development-access-vm:
     runs-on: ubuntu-latest
     needs: deploy-development
+    environment:
+      name: development
+      url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     steps:
-      - name: Create .env.dev file
-        run: |
-          touch ${{vars.TARGET}}/.env.dev
-          echo "DATABASE_URL=${{ vars.DATABASE_URL }}" > ${{vars.TARGET}}/.env.dev
-          echo "PORT=${{ vars.PORT }}" >> ${{vars.TARGET}}/.env.dev
-          echo "PRIVATE_KEY_PATH=${{ vars.PRIVATE_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ vars.PRIVATE_REFRESH_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
       - name: SSH to VM and run script
         uses: appleboy/ssh-action@master
         with:
@@ -67,6 +58,14 @@ jobs:
           port: ${{vars.REMOTE_PORT}}
           script: |
             # Comandos a serem executados na VM
+            cd ${{vars.TARGET}}
+            touch .env.dev
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env.dev
+            echo "PORT=${{ secrets.PORT }}" >> .env.dev
+            echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
+            echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> .env.dev
+            cat .env.dev
+            # Docker Compose Build
             sudo docker compose down
             sudo docker compose build
             sudo docker compose up -d
