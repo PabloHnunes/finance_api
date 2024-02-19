@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: http://192.168.1.8
+      url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     needs: build
     steps:
       - name: Repo Checkout
