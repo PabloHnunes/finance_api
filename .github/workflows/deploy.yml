@@ -30,12 +30,6 @@ jobs:
       name: development
       url: https://ec2-54-233-242-103.sa-east-1.compute.amazonaws.com
     steps:
-      - name: Write .env.dev file
-        run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> ${{vars.TARGET}}/.env.dev
-          echo "PORT=${{ secrets.PORT }}" >> ${{vars.TARGET}}/.env.dev
-          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
-          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
       - name: Repo Checkout
         uses: actions/checkout@v3
       - name: LocalHost Deployment
@@ -47,3 +41,9 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
+      - name: Write .env.dev file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> ${{vars.TARGET}}/.env.dev
+          echo "PORT=${{ secrets.PORT }}" >> ${{vars.TARGET}}/.env.dev
+          echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
+          echo "PRIVATE_REFRESH_KEY_PATH=${{ secrets.PRIVATE_REFRESH_KEY_PATH }}" >> ${{vars.TARGET}}/.env.dev
