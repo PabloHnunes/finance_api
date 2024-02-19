@@ -32,6 +32,7 @@ jobs:
     steps:
       - name: Write .env.dev file
         run: |
+          touch .env.dev
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.dev
           echo "PORT=${{ secrets.PORT }}" >> .env.dev
           echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> .env.dev
