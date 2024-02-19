@@ -32,6 +32,7 @@ jobs:
     steps:
       - name: Write .env.dev file
         run: |
+          touch ${{ github.workspace }}/.env.dev
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> ${{ github.workspace }}/.env.dev
           echo "PORT=${{ secrets.PORT }}" >> ${{ github.workspace }}/.env.dev
           echo "PRIVATE_KEY_PATH=${{ secrets.PRIVATE_KEY_PATH }}" >> ${{ github.workspace }}/.env.dev
@@ -47,7 +48,3 @@ jobs:
           REMOTE_USER : ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.TARGET}}
-      - name: Run after deploy
-        run: |
-          # Se o arquivo .env.dev não existir, crie-o
-          test -f /home/ubuntu/workspace/finance_api/.env.dev || touch /home/ubuntu/workspace/finance_api/.env.dev
