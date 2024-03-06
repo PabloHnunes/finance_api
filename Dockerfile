@@ -8,7 +8,7 @@ RUN chmod +x run_project.sh
 RUN apk upgrade --update-cache --available
 RUN apk --no-cache add curl
 RUN apk add openssl
-RUN openssl genpkey -algorithm RSA -out private.key && openssl rsa -pubout -in private.key -out public_refresh.key
+RUN openssl genpkey -algorithm RSA -out private.key && openssl rsa -pubout -in private.key -out private.refresh.key
 RUN rm -rf /var/cache/apk/*
 RUN npm install
 
