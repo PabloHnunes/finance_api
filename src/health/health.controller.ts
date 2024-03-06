@@ -17,10 +17,16 @@ export class HealthController {
     private readonly prisma: PrismaService,
   ) {}
 
-  @Get()
+  @Get('/')
+  @Public()
+  checkAPI() {
+    return { status: 'API is running' };
+  }
+
+  @Get('/database')
   @HealthCheck()
   @Public()
-  check() {
+  checkDB() {
     return this.health.check([
       () => this.db.pingCheck('database', this.prisma),
     ]);
